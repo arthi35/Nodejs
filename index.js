@@ -3,6 +3,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";//type:module
 import { MongoClient } from "mongodb";
+import { getMoviesById,createMovies,updateMoviesById,deleteMoviesById,getAllMovies } from "./helper.js";
+import{moviesRouter}from "./routes/movies.js"
 dotenv.config();
 
 console.log(process.env.MONGO_URL);
@@ -69,53 +71,53 @@ app.use(cors());
 //we have to use client again globally so we have 
   //to take partcular movie so 
   //we have to give command called db.movies.findOne({id:"102"})
-   const client=await createConnection();
+   export const client=await createConnection();
 
   app.get('/', function (req, res) {
   res.send('Hello World 🙋‍♀️🌎😊🙋‍♀️')
 })
-app.get('/movies', async function (request, response) {
-  const movies=await client.db("movie").collection("movies").find({}).toArray();
-    response.send(movies);
-  })
+// app.get('/movies', async function (request, response) {
+//   const movies=await getAllMovies();
+//     response.send(movies);
+//   })
 
 
-  app.get('/movies/:id',async function (request, response) {
-    console.log(request.params);
-    //db.movies.findOne({id:"102"})
-    const {id}=request.params;
+//   app.get('/movies/:id',async function (request, response) {
+//     console.log(request.params);
+//     //db.movies.findOne({id:"102"})
+//     const {id}=request.params;
 
-    // const movie=movies.find((mv)=>mv.id===id);
-    const movie=await client.db("movie").collection("movies").findOne({id:id});
-   console.log(movie);
-  movie? response.send(movie):response.status(404).send({message: "No such movie found 🙂"})
-  });
+//     // const movie=movies.find((mv)=>mv.id===id);
+//     const movie= await getMoviesById(id);
+//       console.log(movie);
+//   movie? response.send(movie):response.status(404).send({message: "No such movie found 🙂"})
+//   });
 
-  app.delete('/movies/:id',async function (request, response) {
-    console.log(request.params);
-    //db.movies.findOne({id:"102"})
-    const {id}=request.params;
+//   app.delete('/movies/:id',async function (request, response) {
+//     console.log(request.params);
+//     //db.movies.findOne({id:"102"})
+//     const {id}=request.params;
 
-    // const movie=movies.find((mv)=>mv.id===id);
-    const result=await client.db("movie").collection("movies").deleteOne({id:id});
-    response.send(result);
-  });
+//     // const movie=movies.find((mv)=>mv.id===id);
+//     const result=await deleteMoviesById(id);
+//     response.send(result);
+//   });
 
-  app.put('/movies/:id',async function (request, response) {
-    console.log(request.params);
-    //db.movies.updateOne({id:"102"},{$set:updateData})
-    const {id}=request.params;
-    const updateData=request.body;
-    // const movie=movies.find((mv)=>mv.id===id);
-    const result=await client.db("movie").collection("movies").updateOne({id:id},{$set:updateData});
-    response.send(result);
-  });
-  app.post('/movies', async function (request, response) {
+//   app.put('/movies/:id',async function (request, response) {
+//     console.log(request.params);
+//     //db.movies.updateOne({id:"102"},{$set:updateData})
+//     const {id}=request.params;
+//     const updateData=request.body;
+//     // const movie=movies.find((mv)=>mv.id===id);
+//     const result=await updateMoviesById(id, updateData);
+//     response.send(result);
+//   });
+//   app.post('/movies', async function (request, response) {
 
-    const data=request.body;
-    const result=await client.db("movie").collection("movies").insertMany(data);
-    response.send(result);
-  })
+//     const data=request.body;
+//     const result=await createMovies(data);
+//     response.send(result);
+//   })
   // app.get('/movies/:id', async function (request, response) {
     
   //   console.log(request.params);
@@ -150,8 +152,11 @@ app.get('/movies', async function (request, response) {
   //we have to use client again globally so we have 
   //to take partcular movie so 
   //we have to give command called db.movies.findOne({id:"102"})
- 
+ app.use("/movies",moviesRouter)
 
 
 app.listen(PORT,()=>console.log(`Server Started in ${PORT}`))
+
+
+
 
