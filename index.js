@@ -1,4 +1,5 @@
 // const express = require('express')
+import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";//type:module
 import { MongoClient } from "mongodb";
@@ -7,6 +8,7 @@ dotenv.config();
 console.log(process.env.MONGO_URL);
 const app = express()
 const PORT=process.env.PORT
+
 const movies=[
     {"id":"100",
     "name":"Iron man 2",
@@ -50,6 +52,7 @@ const movies=[
   ]
 //app.use is a middleware->all request we are intercepting 
 //after intercepting converting body to json
+app.use(cors());
   app.use(express.json());
   
 //connection between node and mongodb
