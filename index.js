@@ -3,7 +3,6 @@ import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";//type:module
 import { MongoClient } from "mongodb";
-import { getMoviesById,createMovies,updateMoviesById,deleteMoviesById,getAllMovies } from "./helper.js";
 import{moviesRouter}from "./routes/movies.js"
 dotenv.config();
 
