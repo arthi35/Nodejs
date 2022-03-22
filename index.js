@@ -3,7 +3,9 @@ import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";//type:module
 import { MongoClient } from "mongodb";
-import{moviesRouter}from "./routes/movies.js"
+import{moviesRouter}from "./routes/movies.js";
+import{usersRouter}from "./routes/users.js";
+
 dotenv.config();
 
 console.log(process.env.MONGO_URL);
@@ -151,11 +153,19 @@ app.use(cors());
   //we have to use client again globally so we have 
   //to take partcular movie so 
   //we have to give command called db.movies.findOne({id:"102"})
- app.use("/movies",moviesRouter)
-
+ app.use("/movies",moviesRouter);
+ app.use("/users",usersRouter);
 
 app.listen(PORT,()=>console.log(`Server Started in ${PORT}`))
 
+//  async function genPassword(password){
+// //bcrypt.genSalt(No Of Rounds)
+//    const salt=await bcrypt.genSalt(10)
+//    const hashPassword=await bcrypt.hash(password,salt);//salt+password@123
+//   console.log({salt,hashPassword});
+//   return hashpassword;
+//  } 
+ 
 
 
 

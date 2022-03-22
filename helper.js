@@ -3,8 +3,14 @@ import { client } from "./index.js";
 export async function getMoviesById(id) {
   return await client.db("movie").collection("movies").findOne({ id: id });
 }
+export async function getUsersByName(username) {
+  return await client.db("movie").collection("users").findOne({username:username});
+}
 export async function createMovies(data) {
   return await client.db("movie").collection("movies").insertMany(data);
+}
+export async function createUser(data) {
+  return await client.db("movie").collection("users").insertOne(data);
 }
 
 export async function updateMoviesById(id, updateData) {
