@@ -55,8 +55,8 @@ const movies=[
   ]
 //app.use is a middleware->all request we are intercepting 
 //after intercepting converting body to json
-app.use(cors());
-  app.use(express.json());
+app.use(cors());//3rd party middleware
+  app.use(express.json());//Inbuilt middleware
   
 //connection between node and mongodb
   // const MONGO_URL="mongodb://localhost";//mongodb default portnumber
