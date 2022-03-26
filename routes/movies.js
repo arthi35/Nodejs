@@ -9,7 +9,7 @@ import { auth } from "../middleware/auth.js";
 
 const router=express.Router();
 
-router.get('/', auth, async function (request, response) {
+router.get('/',  async function (request, response) {
     const movies=await getAllMovies();
       response.send(movies);
     })
